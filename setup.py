@@ -14,7 +14,7 @@ requires = ['pyramid', 'pyramid_debugtoolbar', 'cef', 'coverage']
 
 
 setup(name='demoapp',
-      version='0.0',
+      version='0.2',
       description='demoapp',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[

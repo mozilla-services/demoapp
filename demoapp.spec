@@ -1,6 +1,6 @@
 %define name python26-demoapp
 %define pythonname demoapp
-%define version 0.0
+%define version 0.2
 %define release 1
 
 Summary: A Services app
