@@ -8,8 +8,14 @@ BUILDAPP = bin/buildapp
 BUILDRPMS = bin/buildrpms
 PYPI = http://pypi.python.org/simple
 PYPIOPTIONS = -i $(PYPI)
-CHANNEL = dev
-RPM_CHANNEL = prod
+DOTCHANNEL := $(wildcard .channel)
+ifeq ($(strip $(DOTCHANNEL)),)
+	CHANNEL = dev
+	RPM_CHANNEL = prod
+else
+	CHANNEL = `cat .channel`
+	RPM_CHANNEL = `cat .channel`
+endif
 INSTALL = bin/pip install
 PIP_CACHE = /tmp/pip_cache
 INSTALLOPTIONS = --download-cache $(PIP_CACHE)  -U -i $(PYPI)
