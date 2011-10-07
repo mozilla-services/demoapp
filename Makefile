@@ -11,7 +11,8 @@ PYPIOPTIONS = -i $(PYPI)
 CHANNEL = dev
 RPM_CHANNEL = prod
 INSTALL = bin/pip install
-INSTALLOPTIONS = -U -i $(PYPI)
+PIP_CACHE = /tmp/pip_cache
+INSTALLOPTIONS = --download-cache $(PIP_CACHE)  -U -i $(PYPI)
 
 ifdef PYPIEXTRAS
 	PYPIOPTIONS += -e $(PYPIEXTRAS)
