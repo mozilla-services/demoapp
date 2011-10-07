@@ -51,7 +51,7 @@ test:
 	$(NOSE) demoapp
 
 build_rpms:
-	$(BUILDRPMS) -c $(RPM_CHANNEL) $(DEPS)
+	$(BUILDRPMS) -r -c $(RPM_CHANNEL) $(DEPS)
 
 mach: build build_rpms
 	mach clean
