@@ -10,7 +10,7 @@ pyramid == 1.2.1
 pyramid_debugtoolbar == 0.9.4
 repoze.lru == 0.4
 venusian == 1.0a2
-zope.component == 3.11.0
-zope.deprecation == 3.5.0
+zope.component == 3.11
+zope.deprecation == 3.5
 zope.event == 3.5.1
-zope.interface == 3.8.0
+zope.interface == 3.8
