@@ -59,4 +59,4 @@ mach: build build_rpms
 	cd rpms; wget http://mrepo.mozilla.org/mrepo/5-x86_64/RPMS.mozilla-services/gunicorn-0.11.2-1moz.x86_64.rpm
 	cd rpms; wget http://mrepo.mozilla.org/mrepo/5-x86_64/RPMS.mozilla/nginx-0.7.65-4.x86_64.rpm
 	mach yum install rpms/*
-	mach chroot python2.6 -m syncreg.run
+	mach chroot python2.6 -m demoapp.run

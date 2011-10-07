@@ -1,6 +1,7 @@
 from pyramid.config import Configurator
 from demoapp.resources import Root
 
+
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
