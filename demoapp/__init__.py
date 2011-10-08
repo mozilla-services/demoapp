@@ -37,16 +37,15 @@ class api(view_config):
         return func
 
 
-@view_config(route_name='apidocs', renderer='string')
+@view_config(route_name='apidocs', renderer='apidocs.mako')
 def apidocs(request):
-    L = []
+    routes = []
     mapper = request.registry.getUtility(IRoutesMapper)
     for k, v in request.registry.settings['apidocs'].items():
         route = mapper.get_route(k)
         if route is not None:
-            L.append('%s: %s' % (route.pattern, v))
-    return '\n\n'.join(L)
-
+            routes.append((route.pattern, v))
+    return {'routes': routes}
 
 
 HERE = os.path.dirname(__file__)
@@ -80,8 +79,8 @@ def main(global_config, **settings):
                      renderer='string',
                      view='demoapp.heartbeat')
 
-    config.add_route('manage', '/__manage__',
-                     renderer='manage.mako',
+    config.add_route('manage', '/__config__',
+                     renderer='config.mako',
                      view='demoapp.manage')
 
     config.add_static_view('static', 'demoapp:static', cache_max_age=3600)
