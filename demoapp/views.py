@@ -1,18 +1,8 @@
+from demoapp import api
 
 
-def get_config(request):
-    return request.registry.settings.get('config')
-
-
-def heartbeat(request):
-    # checks the server's state -- if wrong, return a 503 here
-    return 'OK'
-
-
-def manage(request):
-    config = get_config(request)
-    return {'config': config}
-
-
+@api('/hello', renderer='json')
 def hello(request):
+    """ Blah.
+    """
     return {'Hello': 'World'}

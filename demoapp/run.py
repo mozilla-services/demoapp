@@ -29,6 +29,7 @@
 # under the terms of either the GPL or the LGPL, and not to allow others to
 # use your version of this file under the terms of the MPL, indicate your
 # decision by deleting the provisions above and replace them with the notice
+
 # and other provisions required by the GPL or the LGPL. If you do not delete
 # the provisions above, a recipient may use your version of this file under
 # the terms of any one of the MPL, the GPL or the LGPL.
@@ -50,12 +51,14 @@ os.environ['PYTHON_EGG_CACHE'] = '/tmp/python-eggs'
 ini_file = os.path.join('/etc', 'demoapp', 'production.ini')
 ini_file = os.path.abspath(os.environ.get('INI_FILE', ini_file))
 
-# setting up logging
-try:
-    fileConfig(ini_file)
-except NoSectionError:
-    pass
-
 # running the app using Paste
-from paste.deploy import loadapp
-application = loadapp('config:%s' % ini_file)
+if __name__ == '__main__':
+    # setting up logging
+    try:
+        fileConfig(ini_file)
+    except NoSectionError:
+        pass
+
+
+    from paste.deploy import loadapp
+    application = loadapp('config:%s' % ini_file)
