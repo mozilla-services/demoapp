@@ -1,7 +1,7 @@
 from demoapp import api
 
 
-@api('/hello', renderer='json')
+@api(pattern='/hello', renderer='json', method='GET')
 def hello(request):
     """ Blah.
     """

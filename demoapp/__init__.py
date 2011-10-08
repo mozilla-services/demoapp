@@ -5,35 +5,45 @@ from demoapp.config import Config
 
 from pyramid.view import view_config
 from pyramid.interfaces import IRoutesMapper
+import venusian
 
-
-def add_apidoc(config, url, docstring, renderer):
+def add_apidoc(config, pattern, docstring, renderer):
     apidocs = config.registry.settings.setdefault('apidocs', {})
-    info = apidocs.setdefault(url, {})
+    info = apidocs.setdefault(pattern, {})
     info['docstring'] = docstring
     info['renderer'] = renderer
 
 
-class api(view_config):
-    def __init__(self, route, **kw):
-        kw['route_name'] = route
-        view_config.__init__(self, **kw)
-        self._route = route
+class api(object):
+    def __init__(self, **kw):
+        self.route_pattern = kw.pop('pattern')
+        self.route_method = kw.pop('method', None)
+        self.kw = kw
 
     def __call__(self, func):
-        route = self._route
-        del self._route
-        view_config.__call__(self, func)
+        kw = self.kw.copy()
         docstring = func.__doc__
-
         def callback(context, name, ob):
-            config = context.config
-            config.add_route(route, route)
-            renderer = self.renderer
-            route_name = self.route_name
-            add_apidoc(config, route_name, docstring, renderer)
+            config = context.config.with_package(info.module)
+            renderer = self.kw.get('renderer')
+            route_name = func.__name__
+            route_method = self.route_method
+            config.add_apidoc((self.route_pattern, route_method),
+                              docstring, renderer)
+            config.add_route(route_name, self.route_pattern,
+                             request_method=route_method)
+            config.add_view(view=ob, route_name=route_name, **kw)
 
-        self.venusian.attach(func, callback, category='pyramid')
+        info = venusian.attach(func, callback, category='pyramid')
+
+        if info.scope == 'class':
+            # if the decorator was attached to a method in a class, or
+            # otherwise executed at class scope, we need to set an
+            # 'attr' into the settings if one isn't already in there
+            if kw['attr'] is None:
+                kw['attr'] = func.__name__
+
+        kw['_info'] = info.codeinfo # fbo "action_method"
         return func
 
 
@@ -42,9 +52,7 @@ def apidocs(request):
     routes = []
     mapper = request.registry.getUtility(IRoutesMapper)
     for k, v in request.registry.settings['apidocs'].items():
-        route = mapper.get_route(k)
-        if route is not None:
-            routes.append((route.pattern, v))
+        routes.append((k, v))
     return {'routes': routes}
 
 

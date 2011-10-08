@@ -18,7 +18,7 @@
         <div style="padding: 20px">
             <h2>APIs</h2>
         %for api, value in routes:
-        <h3>${api}</h3>
+        <h3>${api[1]} ${api[0]}</h3>
         <p>${value['docstring']}</p>
         %endfor
        </div>
