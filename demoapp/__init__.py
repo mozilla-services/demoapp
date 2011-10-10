@@ -3,6 +3,9 @@ from pyramid.config import Configurator
 from demoapp.resources import Root
 from demoapp.config import Config
 
+from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid_who.whov2 import WhoV2AuthenticationPolicy
+
 from pyramid.view import view_config
 from pyramid.interfaces import IRoutesMapper
 import venusian
@@ -81,7 +84,17 @@ def main(global_config, **settings):
         settings['config'] = Config(config_file)
 
 
-    config = Configurator(root_factory=Root, settings=settings)
+    who_ini = os.path.join(HERE, "..", "etc", "who.ini")
+    authn_policy = WhoV2AuthenticationPolicy(who_ini, "basicauth")
+    authz_policy = ACLAuthorizationPolicy()
+    config = Configurator(root_factory=Root, settings=settings,
+                          authorization_policy=authz_policy,
+                          authentication_policy=authn_policy)
+
+    # set up custom forbidden view
+    config.add_view("demoapp.security.forbidden_view",
+                     context="pyramid.exceptions.Forbidden")
+
     # adding default views: __heartbeat__, __apis__
     config.add_route('heartbeat', '/__heartbeat__',
                      renderer='string',
