@@ -18,4 +18,3 @@ def forbidden_view(request):
     """
     api = request.environ.get("repoze.who.api")
     return request.get_response(api.challenge())
-
