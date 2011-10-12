@@ -2,7 +2,7 @@
 from pyramid.exceptions import Forbidden
 from pyramid.security import authenticated_userid
 
-from demoapp import api
+from cornice import api
 
 
 @api(pattern='/hello')

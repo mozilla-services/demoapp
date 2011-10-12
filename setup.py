@@ -10,8 +10,7 @@ with open(os.path.join(here, 'README.txt')) as f:
 with open(os.path.join(here, 'CHANGES.txt')) as f:
     CHANGES = f.read()
 
-requires = ['pyramid', 'pyramid_debugtoolbar', 'cef', 'coverage',
-            'simplejson', 'pyramid_who', 'repoze.who']
+requires = ['cornice']
 
 
 setup(name='demoapp',
