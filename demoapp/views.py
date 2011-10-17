@@ -8,7 +8,7 @@ user_info = Service(name='users', path='/{username}/info')
 _USERS = defaultdict(dict)
 
 
-@user_info.api(request_method='GET')
+@user_info.api()
 def get_info(request):
     """Returns the public information about a user.
 
@@ -31,18 +31,3 @@ def set_info(request):
         raise Forbidden()
     _USERS[username] = request.json_body
     return {'success': True}
-
-
-@user_info.api(request_method='PUT', renderer='string')
-def set_info2(request):
-    """Set the public information for a user.
-
-    You have to be that user, and authenticated.
-
-    Returns True or False.
-    """
-    username = authenticated_userid(request)
-    if request.matchdict["username"] != username:
-        raise Forbidden()
-    _USERS[username] = request.json_body
-    return 'OK'
