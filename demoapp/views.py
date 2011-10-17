@@ -10,7 +10,7 @@ _USERS = defaultdict(dict)
 
 @user_info.api()
 def get_info(request):
-    """Returns the public information about a user.
+    """Returns the public information about a **user**.
 
     If the user does not exists, returns an empty dataset.
     """
@@ -20,11 +20,11 @@ def get_info(request):
 
 @user_info.api(request_method='POST')
 def set_info(request):
-    """Set the public information for a user.
+    """Set the public information for a **user**.
 
-    You have to be that user, and authenticated.
+    You have to be that user, and *authenticated*.
 
-    Returns True or False.
+    Returns *True* or *False*.
     """
     username = authenticated_userid(request)
     if request.matchdict["username"] != username:
