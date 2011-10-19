@@ -59,6 +59,5 @@ if __name__ == '__main__':
     except NoSectionError:
         pass
 
-
     from paste.deploy import loadapp
     application = loadapp('config:%s' % ini_file)

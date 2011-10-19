@@ -1,17 +1,10 @@
-import demoapp
-#from cornice import make_main
 import os
-
-from webob.exc import HTTPNotFound, HTTPMethodNotAllowed
 
 from pyramid.config import Configurator
 from pyramid.authorization import ACLAuthorizationPolicy
-from pyramid.events import BeforeRender
 
-from cornice.resources import Root
-from cornice.config import Config
-from cornice import util
-from cornice.service import Service, get_service     # NOQA
+from demoapp.resources import Root
+from mozsvc.config import Config
 
 
 def main(global_config, **settings):
@@ -35,6 +28,9 @@ def main(global_config, **settings):
 
     # adds cornice
     config.include("cornice")
+
+    # adds Mozilla default views
+    config.include("mozsvc")
 
     config.scan("demoapp.views")
     return config.make_wsgi_app()
