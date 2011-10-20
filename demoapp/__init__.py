@@ -32,5 +32,7 @@ def main(global_config, **settings):
     # adds Mozilla default views
     config.include("mozsvc")
 
+    # adds application-specific views
+    config.add_route("whoami", "/whoami")
     config.scan("demoapp.views")
     return config.make_wsgi_app()
