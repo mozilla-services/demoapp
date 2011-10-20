@@ -23,8 +23,11 @@ def main(global_config, **settings):
     config = Configurator(root_factory=Root, settings=settings,
                             authorization_policy=authz_policy)
 
-    # add auth via repoze.who
+    # adds authorization
+    # option 1: auth via repoze.who
     config.include("pyramid_whoauth")
+    # option 2: auth based on IP address
+    #config.include("pyramid_ipauth")
 
     # adds cornice
     config.include("cornice")
