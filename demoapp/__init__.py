@@ -23,8 +23,7 @@ def main(global_config, **settings):
                             authorization_policy=authz_policy)
 
     # add auth via repoze.who
-    # eventually the app will have to do this explicitly
-    config.include("cornice.auth.whoauth")
+    config.include("pyramid_whoauth")
 
     # adds cornice
     config.include("cornice")
