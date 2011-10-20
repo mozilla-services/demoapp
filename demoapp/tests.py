@@ -10,8 +10,9 @@ class ViewTests(unittest.TestCase):
     def tearDown(self):
         testing.tearDown()
 
-    def test_my_view(self):
-        from demoapp.views import my_view
+    def test_user_info_service(self):
+        from demoapp.views import get_info, set_info
         request = testing.DummyRequest()
-        info = my_view(request)
-        self.assertEqual(info['project'], 'demoapp')
+        request.matchdict = {"username": "user1"}
+        info = get_info(request)
+        self.assertEqual(info, {})
