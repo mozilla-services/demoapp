@@ -1,7 +1,7 @@
 import os
 
-from pyramid.config import Configurator
 from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.config import Configurator
 
 from demoapp.resources import Root
 from mozsvc.config import Config
