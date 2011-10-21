@@ -1,6 +1,5 @@
 import os
 
-from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 
 from mozsvc.config import Config
@@ -17,17 +16,23 @@ def main(global_config, **settings):
                         config_file))))
 
     settings['config'] = config = Config(config_file)
-    conf_dir, _ = os.path.split(config_file)
 
-    authz_policy = ACLAuthorizationPolicy()
-    config = Configurator(root_factory=Root, settings=settings,
-                            authorization_policy=authz_policy)
+    # Put values from the config file into the pyramid settings dict.
+    for section in config.sections():
+        if ":" in section:
+            setting_prefix = section.replace(":", ".")
+            for name, value in config.get_map(section).iteritems():
+                settings[setting_prefix + "." + name] = value
+
+    config = Configurator(root_factory=Root, settings=settings)
 
     # adds authorization
     # option 1: auth via repoze.who
-    config.include("pyramid_whoauth")
+    #config.include("pyramid_whoauth")
     # option 2: auth based on IP address
     #config.include("pyramid_ipauth")
+    # option 3: multiple stacked auth modules
+    config.include("pyramid_multiauth")
 
     # adds cornice
     config.include("cornice")
@@ -38,4 +43,5 @@ def main(global_config, **settings):
     # adds application-specific views
     config.add_route("whoami", "/whoami")
     config.scan("demoapp.views")
+
     return config.make_wsgi_app()
