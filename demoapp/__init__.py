@@ -3,8 +3,9 @@ import os
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 
-from demoapp.resources import Root
 from mozsvc.config import Config
+
+from demoapp.resources import Root
 
 
 def main(global_config, **settings):
