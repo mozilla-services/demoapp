@@ -1,14 +1,23 @@
 from collections import defaultdict
+
 from pyramid.exceptions import Forbidden
 from pyramid.security import authenticated_userid
 
 from cornice import Service
 
-user_info = Service(name='users', path='/{username}/info')
+
+info_desc = """\
+This service is useful to get and set data for a user.
+"""
+
+
+user_info = Service(name='users', path='/{username}/info',
+                    description=info_desc)
+
 _USERS = defaultdict(dict)
 
 
-@user_info.api()
+@user_info.get()
 def get_info(request):
     """Returns the public information about a **user**.
 
@@ -18,7 +27,7 @@ def get_info(request):
     return _USERS[username]
 
 
-@user_info.api(request_method='POST')
+@user_info.post()
 def set_info(request):
     """Set the public information for a **user**.
 
