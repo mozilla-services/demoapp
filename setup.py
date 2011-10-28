@@ -10,7 +10,7 @@ with open(os.path.join(here, 'README.txt')) as f:
 with open(os.path.join(here, 'CHANGES.txt')) as f:
     CHANGES = f.read()
 
-requires = ['cornice', 'mozsvc']
+requires = ['cornice', 'pyramid_whoauth', 'mozsvc']
 
 
 setup(name='demoapp',

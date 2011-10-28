@@ -1,7 +1,8 @@
 from collections import defaultdict
 
 from pyramid.exceptions import Forbidden
-from pyramid.security import authenticated_userid
+from pyramid.security import authenticated_userid, effective_principals
+from pyramid.view import view_config
 
 from cornice import Service
 
@@ -40,3 +41,11 @@ def set_info(request):
         raise Forbidden()
     _USERS[username] = request.json_body
     return {'success': True}
+
+
+@view_config(route_name="whoami", permission="authenticated", renderer="json")
+def whoami(request):
+    """View returning the authenticated user's credentials."""
+    username = authenticated_userid(request)
+    principals = effective_principals(request)
+    return {"username": username, "principals": principals}
