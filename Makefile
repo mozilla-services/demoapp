@@ -1,11 +1,13 @@
 APPNAME = demoapp
 DEPS =
+HERE = $(shell pwd)
+BIN = $(HERE)/bin
 VIRTUALENV = virtualenv
 NOSE = bin/nosetests -s --with-xunit
-TESTS = demoapp/tests
-PYTHON = bin/python
-BUILDAPP = bin/buildapp
-BUILDRPMS = bin/buildrpms
+TESTS = $(APPNAME)/tests
+PYTHON = $(BIN)/python
+BUILDAPP = $(BIN)/buildapp
+BUILDRPMS = $(BIN)/buildrpms
 PYPI = http://pypi.python.org/simple
 PYPIOPTIONS = -i $(PYPI)
 DOTCHANNEL := $(wildcard .channel)
@@ -16,7 +18,7 @@ else
 	CHANNEL = `cat .channel`
 	RPM_CHANNEL = `cat .channel`
 endif
-INSTALL = bin/pip install
+INSTALL = $(BIN)/pip install
 PIP_CACHE = /tmp/pip_cache
 INSTALLOPTIONS = --download-cache $(PIP_CACHE)  -U -i $(PYPI)
 
@@ -54,7 +56,7 @@ update:
 	$(BUILDAPP) -c $(CHANNEL) $(PYPIOPTIONS) $(DEPS)
 
 test:
-	$(NOSE) demoapp
+	$(NOSE) $(APPNAME)
 
 build_rpms:
 	rm -rf rpms/
