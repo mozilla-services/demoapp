@@ -1,15 +1,13 @@
 from pyramid.config import Configurator
 
-from mozsvc.config import load_into_settings
+from mozsvc.config import get_configurator
 
 from demoapp.resources import Root
 
 
 def main(global_config, **settings):
-    config_file = global_config['__file__']
-    config_ = load_into_settings(config_file, settings)
-
-    config = Configurator(root_factory=Root, settings=settings)
+    config = get_configurator(global_config, **settings)
+    config.set_root_factory(Root)
 
     # adds authorization
     # option 1: auth via repoze.who
