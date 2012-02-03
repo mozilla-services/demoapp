@@ -11,11 +11,11 @@ def main(global_config, **settings):
 
     # adds authorization
     # option 1: auth via repoze.who
-    #config.include("pyramid_whoauth")
+    config.include("pyramid_whoauth")
     # option 2: auth based on IP address
     #config.include("pyramid_ipauth")
     # option 3: multiple stacked auth modules
-    config.include("pyramid_multiauth")
+    #config.include("pyramid_multiauth")
 
     # adds cornice
     config.include("cornice")
