@@ -1,3 +1,6 @@
+# Any copyright is dedicated to the Public Domain.
+# http://creativecommons.org/publicdomain/zero/1.0/
+
 import os
 
 from setuptools import setup, find_packages
@@ -14,7 +17,7 @@ requires = ['cornice', 'pyramid_whoauth', 'mozsvc']
 
 
 setup(name='demoapp',
-      version='0.2',
+      version='0.3',
       description='demoapp',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
@@ -25,6 +28,7 @@ setup(name='demoapp',
         ],
       author='',
       author_email='',
+      license='CC0 Public Domain',
       url='',
       keywords='web pyramid pylons',
       packages=find_packages(),

@@ -1,3 +1,6 @@
+# Any copyright is dedicated to the Public Domain.
+# http://creativecommons.org/publicdomain/zero/1.0/
+
 from pyramid.config import Configurator
 
 from mozsvc.config import get_configurator

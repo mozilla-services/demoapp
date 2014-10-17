@@ -8,7 +8,7 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: %{pythonname}-%{version}.tar.gz
-License: MPL
+License: CC0 Public Domain
 Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{pythonname}-%{version}-%{release}-buildroot
 Prefix: %{_prefix}
